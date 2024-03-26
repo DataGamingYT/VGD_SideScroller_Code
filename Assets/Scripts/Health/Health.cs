@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+
+    [Header("Health")]
     public float startingHealth;
     public float currentHealth { get; private set; }
     private Animator anim;
     private bool dead;
     public Transform respawnPoint;
-    public UiManager GameOver();
+    //  public UiManager GameOver();
 
+
+    [Header("iFrames")]
+    public float duration;
+    public int flashes;
+    private SpriteRenderer spriteRend;
 
 
     private void Awake()
     {
         currentHealth = startingHealth;
         anim = GetComponent<Animator>();
-
+        spriteRend = GetComponent<SpriteRenderer>();
     }
 
 
@@ -32,7 +39,7 @@ public class Health : MonoBehaviour
         {
             //Player takes damage
             anim.SetTrigger("hurt");
-
+           // StartCoroutine(Invunerability());
 
         }
 
@@ -45,8 +52,9 @@ public class Health : MonoBehaviour
                 anim.SetTrigger("dead");
                 GetComponent<PlayerController>().enabled = false;
                 dead = true;
-                GameOver();
+                // GameOver();
 
+                FindObjectOfType<UiManager>().GameOver();
 
 
             }
